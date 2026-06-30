@@ -3,6 +3,7 @@ import json
 import os
 from typing import List
 from mcp.server.fastmcp import FastMCP
+import uvicorn
 
 PAPER_DIR = "papers"
 
@@ -187,9 +188,5 @@ def generate_search_prompt(topic: str, num_papers: int = 5) -> str:
     Please present both detailed information about each paper and a high-level synthesis of the research landscape in {topic}."""
 
 if __name__ == "__main__":
-
-    mcp.run(
-            transport='streamable-http',
-            host='0.0.0.0',
-            port=port
-            )
+    app = mcp.streamable_http_app()
+    uvicorn.run(app, host='0.0.0.0', port=port)
