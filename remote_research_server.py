@@ -9,7 +9,7 @@ PAPER_DIR = "papers"
 
 port = int(os.environ.get("PORT", 8001))
 #initialize the MCP server
-mcp = FastMCP("research", port=port)
+mcp = FastMCP("research", port=port, host='0.0.0.0')
 
 @mcp.tool()
 def search_papers(topic: str, max_results: int = 5) -> List[str]:
@@ -189,4 +189,4 @@ def generate_search_prompt(topic: str, num_papers: int = 5) -> str:
 
 if __name__ == "__main__":
     app = mcp.streamable_http_app()
-    uvicorn.run(app, host='0.0.0.0', port=port)
+    uvicorn.run(app, host='0.0.0.0', port=port, forwarded_allow_ips='*')
